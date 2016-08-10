@@ -1,9 +1,9 @@
 # miamitrolley
 React Native version of Miami Trolley app
 
-![image](https://cloud.githubusercontent.com/assets/1198220/17469101/fa5f0b00-5cfb-11e6-8ba4-19e43b350ffb.png)
-
-![image](https://cloud.githubusercontent.com/assets/1198220/17469043/87255252-5cfb-11e6-9b5a-c7fa730c7874.png) 
+<img src="https://cloud.githubusercontent.com/assets/1198220/17541695/e10a7866-5e8f-11e6-9fa4-63d8170be138.png" width="250"> 
+<img src="https://cloud.githubusercontent.com/assets/1198220/17541706/015d42c4-5e90-11e6-91c8-17bdd6584886.png" width="250"> 
+<img src="https://cloud.githubusercontent.com/assets/1198220/17541711/0f6baa4a-5e90-11e6-9979-7ff60a2f8f52.png" width="250"> 
 
 ## Getting Started (iOS Only at the moment)
 
