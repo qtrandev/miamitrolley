@@ -24,6 +24,7 @@ class miamitrolley extends Component {
     super(props);
     this.state = {
       markers: props.markers,
+      routes: props.routes,
       selectedTab: 'one'
     };
   }
@@ -68,6 +69,7 @@ class miamitrolley extends Component {
                 latitudeDelta: 0.18,
                 longitudeDelta: 0.18
               }}
+              overlays={this.state.routes}
               annotations={this.state.markers}/>
               <TouchableHighlight
                 style={styles.button}
@@ -95,6 +97,10 @@ class miamitrolley extends Component {
     );
   }
   refresh() {
+    this.displayTrolleys();
+    this.displayRoutes();
+  }
+  displayTrolleys() {
     fetch('https://miami-transit-api.herokuapp.com/api/trolley/vehicles.json')
       .then((response) => response.json())
       .then((responseJson) => {
@@ -118,6 +124,47 @@ class miamitrolley extends Component {
         console.error(error);
       });
   }
+  displayRoutes() {
+    fetch('https://raw.githubusercontent.com/qtrandev/OneBusAway/master/GTFS/Miami/shapes.txt').then((response) => response.text())
+    .then((responseText) => {
+      //console.log(responseText);
+      var routeOverlays = processShapeData(responseText);
+      this.setState({ routes: routeOverlays });
+    })
+    .catch((error) => {
+      console.warn(error);
+    });
+  }
+}
+
+function processShapeData(allText) {
+  var allTextLines = allText.split(/\r\n|\n/);
+  var headers = allTextLines[0].split(',');
+  var routes = [];
+  for (var i=1; i<allTextLines.length; i++) {
+      var data = allTextLines[i].split(',');
+      if (data.length >= 4) {
+        if (routes[data[0]] === undefined) {
+          routes[data[0]] = [];
+        }
+        routes[data[0]].push(data);
+      }
+  }
+  var routeOverlays = [];
+  for (var index in routes) {
+    var route = routes[index];
+    var coordinates = [];
+		for (var i=0; i<route.length; i++) {
+			coordinates[i] = {latitude: parseFloat(route[i][1]), longitude: parseFloat(route[i][2])};
+		}
+    routeOverlays.push(
+    {
+      coordinates: coordinates,
+      strokeColor: '#'+route[0][0]+route[0][0]+'0000',
+      lineWidth: 10,
+    });
+  }
+  return routeOverlays;
 }
 
 const styles = StyleSheet.create({
@@ -157,7 +204,8 @@ const styles = StyleSheet.create({
 });
 
 miamitrolley.defaultProps = {
-  markers: []
+  markers: [],
+  routes: []
 };
 
 class RoutesView extends Component {
