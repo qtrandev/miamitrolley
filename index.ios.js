@@ -160,12 +160,25 @@ function processShapeData(allText) {
     routeOverlays.push(
     {
       coordinates: coordinates,
-      strokeColor: '#'+route[0][0]+route[0][0]+'0000',
-      lineWidth: 10,
+      strokeColor: routeColors[route[0][0]],
+      lineWidth: 6,
     });
   }
   return routeOverlays;
 }
+
+var routeColors = {
+  "1":"#a64598",
+  "2":"#679844",
+  "3":"#0faed2",
+  "4":"#3e5ba6",
+  "5":"#f59640",
+  "6":"#c73136",
+  "7":"#f39690",
+  "11":"#FFAB5F",
+  "12":"#A07D5C",
+  "13":"#2BAA33",
+};
 
 const styles = StyleSheet.create({
   container: {
